@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>콘서트 티켓팅 캘린더</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style id="css">
+:root{--bg:#f6f3ee;--panel:#fffdf9;--ink:#1d1a17;--mute:#7a726a;--line:#e6dfd5;--soft:#efe9e0;--accent:#c8322a;--accent-ink:#fff;
+--v-kspo:#d2453b;--v-gocheok:#2f6fd6;--v-inspire:#7b4fc9;--v-goyang:#1f8f86;--v-hwajeong:#c98a12;--v-kintex:#c2417a;--v-handball:#b45309;--v-jangchung:#4d7c0f;--v-busan:#0369a1;--v-etc:#7a726a;--r:10px}
+@media (prefers-color-scheme:dark){:root{--bg:#141210;--panel:#1d1a17;--ink:#f1ece5;--mute:#a39a90;--line:#332e29;--soft:#26221e}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.5 "IBM Plex Sans KR",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.wrap{max-width:1280px;margin:0 auto;padding:20px 20px 40px}
+header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+header h1{font-size:20px;margin:0;font-weight:700;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+.stub{display:inline-block;width:26px;height:18px;background:var(--accent);border-radius:3px;position:relative;-webkit-mask:radial-gradient(circle at 0 50%,transparent 4px,#000 4.5px) left/51% 100% no-repeat,radial-gradient(circle at 100% 50%,transparent 4px,#000 4.5px) right/51% 100% no-repeat;mask:radial-gradient(circle at 0 50%,transparent 4px,#000 4.5px) left/51% 100% no-repeat,radial-gradient(circle at 100% 50%,transparent 4px,#000 4.5px) right/51% 100% no-repeat}
+.saveinfo{font-size:12px;color:var(--mute)}
+.spacer{flex:1}
+a.btn{text-decoration:none;color:inherit}
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:7px 12px;font-weight:500;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--mute)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn.ghost{background:transparent;border-color:transparent}
+.btn.ghost:hover{background:var(--soft)}
+.btn.sm{padding:4px 9px;font-size:12px}
+.btn.danger{color:var(--accent)}
+.seg{display:inline-flex;background:var(--soft);border-radius:8px;padding:3px}
+.seg button{border:0;background:transparent;padding:5px 12px;border-radius:6px;font-weight:500;color:var(--mute)}
+.seg button.on{background:var(--panel);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start}
+@media (max-width:980px){.layout{display:flex;flex-direction:column;gap:14px;align-items:stretch}.layout>.side{display:contents}.side .hero{order:0}.layout>.main{order:1}.side .up{order:2}.ulist{max-height:none}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px}
+.toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid var(--line)}
+.toolbar h2{margin:0 6px;font-size:18px;font-weight:700;min-width:120px;text-align:center}
+select.f{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:6px 8px}
+label.chk{display:inline-flex;align-items:center;gap:5px;color:var(--mute);font-size:13px}
+.legend{display:flex;gap:12px;flex-wrap:wrap;padding:10px 16px;font-size:12px;color:var(--mute);border-top:1px solid var(--line)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+.dow{padding:8px 10px;font-size:12px;color:var(--mute);font-weight:600;border-bottom:1px solid var(--line)}
+.dow.sun{color:var(--accent)}.dow.sat{color:#2f6fd6}
+.cell{min-height:118px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:6px 6px 8px;cursor:pointer;position:relative;display:flex;flex-direction:column;gap:3px;min-width:0}
+.cell:nth-child(7n){border-right:0}
+.cell:hover{background:color-mix(in srgb,var(--soft) 55%,transparent)}
+.cell.out{opacity:.4}
+.cell .dn{font-size:12px;font-weight:600;width:24px;height:24px;display:grid;place-items:center;border-radius:50%}
+.cell.today .dn{background:var(--ink);color:var(--panel)}
+.cell.sun .dn{color:var(--accent)}.cell.sat .dn{color:#2f6fd6}
+.cell.today.sun .dn,.cell.today.sat .dn{color:var(--panel)}
+.chip{display:block;width:100%;text-align:left;border:0;border-radius:5px;padding:2px 6px;font-size:11.5px;line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip.open{color:#fff;font-weight:600;background:var(--gc)}
+.chip.open .t{font-family:"IBM Plex Mono",monospace;font-weight:500;opacity:.9;margin-right:4px}
+.chip.run{background:color-mix(in srgb,var(--gc) 13%,transparent);color:color-mix(in srgb,var(--gc) 80%,var(--ink));border-left:3px solid var(--gc);border-radius:3px}
+.chip.dim{opacity:.45;text-decoration:line-through}
+.more{font-size:11px;color:var(--mute);padding-left:6px}
+@media (max-width:640px){.wrap{padding:14px 10px 30px}.cell{min-height:78px;padding:3px 2px 4px;gap:2px}.cell .dn{width:20px;height:20px;font-size:11px}.chip{font-size:9.5px;padding:1px 3px;border-radius:3px;line-height:1.35}.chip .t{display:none}.chip.run{border-left-width:2px}.dow{padding:6px 4px;text-align:center}.toolbar{padding:10px}.toolbar h2{min-width:0;font-size:16px}.toolbar .spacer{flex-basis:100%;height:0}select.f{flex:1;min-width:0}.more{font-size:9.5px;padding-left:2px}.legend{gap:8px}.legend span:last-child{margin-left:0;width:100%}header .saveinfo{width:100%;order:9}header .lnk{display:none}.hero{padding:14px 16px}.hero .cd{font-size:24px;margin:8px 0}}
+.side{display:flex;flex-direction:column;gap:16px;position:sticky;top:16px}
+.hero{padding:18px;background:var(--ink);color:var(--panel);border-radius:14px;position:relative;overflow:hidden}
+.hero .k{font-size:12px;opacity:.7;letter-spacing:.04em}
+.hero .tt{font-size:17px;font-weight:700;margin:4px 0 2px;line-height:1.35}
+.hero .meta{font-size:12.5px;opacity:.8}
+.hero .cd{font-size:30px;font-weight:600;margin:12px 0 10px;letter-spacing:-.01em}
+.hero .acts{display:flex;gap:6px;flex-wrap:wrap}
+.hero .acts a{color:var(--ink);background:var(--panel);text-decoration:none;font-size:12px;font-weight:600;padding:5px 10px;border-radius:7px}
+.hero .bar{position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--gc)}
+.hero.empty{background:var(--panel);color:var(--ink);border:1px dashed var(--line)}
+.up h3{font-size:14px;margin:0;padding:14px 16px 10px;display:flex;justify-content:space-between;align-items:center}
+.up h3 span{font-weight:500;color:var(--mute);font-size:12px}
+.ulist{list-style:none;margin:0;padding:0 8px 8px;max-height:560px;overflow:auto}
+.ui{display:grid;grid-template-columns:54px 1fr;gap:10px;padding:9px 8px;border-radius:9px;cursor:pointer;align-items:center}
+.ui:hover{background:var(--soft)}
+.dd{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;text-align:center;border-radius:7px;padding:5px 0;background:var(--soft)}
+.dd.hot{background:var(--accent);color:#fff}
+.dd.warm{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+.ui .a{font-weight:600;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ui .b{font-size:12px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ui .b .gd{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gc);margin-right:5px;vertical-align:1px}
+.ui.dim{opacity:.5}
+.emptyhint{padding:18px 16px 22px;color:var(--mute);font-size:13px}
+/* list view */
+table.lt{width:100%;border-collapse:collapse}
+.lt th{font-size:12px;color:var(--mute);text-align:left;font-weight:600;padding:10px 12px;border-bottom:1px solid var(--line)}
+.lt td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;font-size:13px}
+.lt tr.row{cursor:pointer}.lt tr.row:hover td{background:var(--soft)}
+.lt .tt{font-weight:600}
+.lt .opens{display:flex;flex-direction:column;gap:2px}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:1px 7px;border-radius:20px;background:var(--soft);color:var(--mute);white-space:nowrap}
+.tag.g{background:color-mix(in srgb,var(--gc) 15%,transparent);color:var(--gc)}
+.st-interest{}.st-plan{background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent)}
+.st-done{background:color-mix(in srgb,#3f9a3a 18%,transparent);color:#3f9a3a}.st-skip{opacity:.7}
+.past{color:var(--mute);text-decoration:line-through}
+@media (max-width:640px){.lt .hide-m{display:none}}
+/* modal */
+.ov{position:fixed;inset:0;background:rgba(20,16,12,.45);display:flex;align-items:flex-start;justify-content:center;padding:5vh 14px;z-index:50;overflow:auto}
+.modal{background:var(--panel);border-radius:16px;width:100%;max-width:560px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.modal .mh{display:flex;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}
+.modal .mh h3{margin:0;font-size:16px;flex:1}
+.modal .mb{padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.modal .mf{display:flex;gap:8px;padding:14px 18px;border-top:1px solid var(--line);align-items:center}
+.fld{display:flex;flex-direction:column;gap:4px}
+.fld>span{font-size:12px;color:var(--mute);font-weight:600}
+.fld input,.fld select,.fld textarea{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:8px 10px;width:100%;min-width:0}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:2px solid color-mix(in srgb,var(--accent) 40%,transparent);border-color:var(--accent)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opensbox{background:var(--soft);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:8px}
+.orow{display:grid;grid-template-columns:120px 1fr 30px;gap:6px}
+.orow input{border:1px solid var(--line);background:var(--panel);border-radius:7px;padding:7px 8px;min-width:0}
+.x{border:0;background:transparent;color:var(--mute);font-size:18px;line-height:1;border-radius:6px}
+.x:hover{background:var(--panel);color:var(--accent)}
+.dayitem{display:flex;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:10px;cursor:pointer}
+.dayitem:hover{border-color:var(--mute)}
+.dayitem .bar{width:4px;align-self:stretch;border-radius:3px;background:var(--gc)}
+.dayitem .a{font-weight:600}.dayitem .b{font-size:12px;color:var(--mute)}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:var(--panel);padding:10px 16px;border-radius:10px;font-size:13px;z-index:60;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.hidden{display:none!important}
+textarea.json{font-family:"IBM Plex Mono",monospace;font-size:12px;min-height:180px}
+</style></head><body><div id="root"></div>
+<script id="state" type="application/json">{"shows": [{"id": "day6present", "title": "DAY6 Special Concert 'The Present'", "genre": "kspo", "status": "interest", "site": "NOL 티켓", "url": "https://nol.yanolja.com/ticket/products/26016335", "start": "2026-12-18", "end": "2026-12-20", "venue": "", "memo": "팬클럽 My Day 6기 대상 선예매(인증은 11/18 마감) · 선예매 회당 1인 1매 / 일반 회당 1인 2매 · 전석 154,000원", "opens": [{"label": "팬클럽 선예매", "at": "2026-11-19T20:00"}, {"label": "일반예매", "at": "2026-11-20T20:00"}]}, {"id": "sjde2027", "title": "SUPER JUNIOR-D&E LIVE TOUR D&ESTIVAL", "genre": "inspire", "status": "interest", "site": "NOL 티켓", "url": "https://nol.yanolja.com/ticket/products/26016656", "start": "2027-01-09", "end": "2027-01-10", "venue": "", "memo": "선예매는 ANNIE 멤버십 가입 11/19 23:59까지 · 인증 11/25 10:00~11/30 23:59 · 회당 1인 2매 · VIP 198,000 / 일반 168,000원", "opens": [{"label": "팬클럽 선예매", "at": "2026-11-30T20:00"}, {"label": "일반예매", "at": "2026-12-02T20:00"}]}, {"id": "taeyeonfly", "title": "TAEYEON CONCERT - F.L.Y. in Seoul", "genre": "kspo", "status": "interest", "site": "멜론티켓", "url": "https://ticket.melon.com/csoon/detail.htm?csoonId=13319", "start": "2027-01-15", "end": "2027-01-17", "venue": "", "memo": "국내 팬클럽 인증 ~12/1 23:59 (글로벌 선예매 12/2 20:00) · 선예매 회당 1인 1매 / 일반 1인 2매 · 전석 지정 165,000원", "opens": [{"label": "팬클럽 선예매", "at": "2026-12-01T20:00"}, {"label": "일반예매", "at": "2026-12-03T20:00"}]}, {"id": "ateezzta", "title": "ATEEZ WORLD TOUR [ZERO TO ALL] IN INCHEON", "genre": "inspire", "status": "interest", "site": "NOL 티켓", "url": "https://nol.yanolja.com/ticket/products/26015983", "start": "2027-01-22", "end": "2027-01-24", "venue": "", "memo": "국내 멤버십 인증 12/1 14:00~12/3 23:59 (TOKTOQ 설문 + NOL 인증) · 선예매 회당 1인 1매 / 일반 1인 2매 · Sailor 209,000 / 일반 165,000원", "opens": [{"label": "국내 멤버십 선예매", "at": "2026-12-03T20:00"}, {"label": "일반예매", "at": "2026-12-08T20:00"}]}, {"id": "exokase", "title": "EXO-KASE Fancon Tour - SILENT CITY in SEOUL", "genre": "hwajeong", "status": "interest", "site": "멜론티켓", "url": "https://weverse.io/exo/notice/40966", "start": "2027-01-09", "end": "2027-01-10", "venue": "", "memo": "EXO-L 멤버십(GL) 국내 페이지 인증 11/13 14:00~11/23 23:59 (글로벌 선예매 11/24 20:00) · 선예매 회차당 1인 1매 · 가입자명=예매자명=관람자명 일치 필요 · VIP 165,000 / 일반 143,000원", "opens": [{"label": "팬클럽 선예매", "at": "2026-11-23T20:00"}, {"label": "일반예매", "at": "2026-11-25T20:00"}]}, {"id": "thornapple-diorama", "title": "쏜애플 콘서트 '디오라마'", "genre": "kintex", "status": "interest", "site": "NOL 티켓", "url": "https://nol.yanolja.com/ticket/products/26016745", "start": "2027-01-09", "end": "2027-01-10", "venue": "", "memo": "킨텍스 제2전시장 9홀 · NOL 단독판매 · R 132,000 / S 121,000원", "opens": [{"label": "일반예매", "at": "2026-11-23T19:00"}]}], "updatedAt": "2026-11-19T14:20"}</script>
+<script id="app">
+(function(){
+"use strict";
+var GENRES=[["kspo","KSPO DOME"],["gocheok","고척스카이돔"],["inspire","인스파이어 아레나"],["goyang","고양종합운동장"],["hwajeong","고려대 화정체육관"],["kintex","킨텍스"],["handball","올림픽핸드볼경기장"],["jangchung","장충체육관"],["busan","부산아시아드주경기장"],["etc","기타 공연장"]];
+var GNAME={};GENRES.forEach(function(g){GNAME[g[0]]=g[1]});
+var STATUS=[["interest","관심"],["plan","예매 예정"],["done","예매 완료"],["skip","패스"]];
+var SNAME={};STATUS.forEach(function(s){SNAME[s[0]]=s[1]});
+var SITES=["NOL 티켓","멜론티켓","예스24 티켓","티켓링크"];
+var OPEN_LABELS=["팬클럽 인증 마감","팬클럽 선예매","글로벌 선예매","일반예매","추가 오픈","취소표"];
+var LINKS='<a class="btn ghost lnk" href="https://nol.yanolja.com/ticket/genre/concert" target="_blank" rel="noopener">NOL↗</a><a class="btn ghost lnk" href="https://ticket.melon.com/csoon/index.htm" target="_blank" rel="noopener">멜론↗</a><a class="btn ghost lnk" href="https://ticket.yes24.com/Genre/Concert?Gcode=009_202_001" target="_blank" rel="noopener">예스24↗</a>';
+var DOW=["일","월","화","수","목","금","토"];
+var FONT_LINK='<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">';
+
+var state;
+try{state=JSON.parse(document.getElementById("state").textContent)}catch(e){state={shows:[]}}
+if(!state||!Array.isArray(state.shows))state={shows:[]};
+var LSK_UI="concertTicketUI",LSK_DATA="concertTicketData";
+var now=new Date();
+var ui={y:now.getFullYear(),m:now.getMonth(),genre:"all",status:"all",runs:true,view:"cal"};
+try{var su=JSON.parse(localStorage.getItem(LSK_UI)||"null");if(su)for(var k in su)ui[k]=su[k]}catch(e){}
+function saveUI(){try{localStorage.setItem(LSK_UI,JSON.stringify(ui))}catch(e){}}
+
+var mode="loading",artifact=null;
+var artP=(window.claude&&typeof window.claude.use==="function")?window.claude.use("artifact").catch(function(){return null}):Promise.resolve(null);
+var LSK_ST="concertTicketStatus";
+function applyOverlay(){try{var ov=JSON.parse(localStorage.getItem(LSK_ST)||"{}");state.shows.forEach(function(s){if(ov[s.id])s.status=ov[s.id]})}catch(e){}}
+artP.then(function(a){artifact=a;
+  if(a){mode="shared";render();return}
+  if(/^https?:$/.test(location.protocol)){
+    return fetch("data.json?t="+Date.now(),{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){if(d&&Array.isArray(d.shows)){state=d;mode="site";applyOverlay()}else throw 0}).catch(function(){mode="local"}).then(render)}
+  mode="local";try{var d=JSON.parse(localStorage.getItem(LSK_DATA)||"null");if(d&&Array.isArray(d.shows)&&!state.shows.length){state=d}}catch(e){}
+  render();});
+
+/* ---------- helpers ---------- */
+function p2(n){return(n<10?"0":"")+n}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function parseDT(s){if(!s)return null;var m=/^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}))?/.exec(s);if(!m)return null;return new Date(+m[1],+m[2]-1,+m[3],+(m[4]||0),+(m[5]||0))}
+function ymd(d){return d.getFullYear()+"-"+p2(d.getMonth()+1)+"-"+p2(d.getDate())}
+function hm(d){return p2(d.getHours())+":"+p2(d.getMinutes())}
+function fmtDT(d){return(d.getMonth()+1)+"/"+d.getDate()+"("+DOW[d.getDay()]+") "+hm(d)}
+function fmtD(d){return d.getFullYear()+"."+p2(d.getMonth()+1)+"."+p2(d.getDate())}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function gvar(g){return "var(--v-"+(GNAME[g]?g:"etc")+")"}
+function dayDiff(d){var a=new Date(d.getFullYear(),d.getMonth(),d.getDate()),t=new Date();t=new Date(t.getFullYear(),t.getMonth(),t.getDate());return Math.round((a-t)/864e5)}
+function ddLabel(d){var n=dayDiff(d);if(n===0)return"D-DAY";if(n>0)return"D-"+n;return"D+"+(-n)}
+function countdown(ms){if(ms<=0)return"오픈!";var s=Math.floor(ms/1000),dd=Math.floor(s/86400);s%=86400;var h=Math.floor(s/3600),m=Math.floor(s%3600/60),sec=s%60;return(dd?dd+"일 ":"")+p2(h)+":"+p2(m)+":"+p2(sec)}
+function gcal(sh,o){var d=parseDT(o.at),e=new Date(d.getTime()+30*6e4);function f(x){return x.getFullYear()+p2(x.getMonth()+1)+p2(x.getDate())+"T"+p2(x.getHours())+p2(x.getMinutes())+"00"}
+  return"https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent("🎫 "+sh.title+" "+(o.label||"티켓")+" 오픈")+"&dates="+f(d)+"/"+f(e)+"&ctz=Asia/Seoul&details="+encodeURIComponent([sh.site,sh.url,sh.venue,sh.memo].filter(Boolean).join("\n"))}
+function safeUrl(u){u=String(u||"").trim();if(!u)return"";if(!/^https?:\/\//i.test(u))u="https://"+u;return u}
+function passes(sh){return(ui.genre==="all"||sh.genre===ui.genre)&&(ui.status==="all"||sh.status===ui.status||(ui.status==="active"&&sh.status!=="done"&&sh.status!=="skip"))}
+function find(id){for(var i=0;i<state.shows.length;i++)if(state.shows[i].id===id)return state.shows[i];return null}
+function isDim(sh){return sh.status==="done"||sh.status==="skip"}
+
+function allOpens(){var out=[];state.shows.forEach(function(sh){if(!passes(sh))return;(sh.opens||[]).forEach(function(o){var d=parseDT(o.at);if(d)out.push({sh:sh,o:o,d:d})})});out.sort(function(a,b){return a.d-b.d});return out}
+
+/* ---------- persistence ---------- */
+function buildDoc(s){var css=document.getElementById("css").textContent,app=document.getElementById("app").textContent;
+  var json=JSON.stringify(s).replace(/</g,"\\u003c");
+  return'<!DOCTYPE html>\n<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>콘서트 티켓팅 캘린더</title>\n'+FONT_LINK+'\n<style id="css">'+css+'</style></head><body><div id="root"></div>\n<script id="state" type="application/json">'+json+'<\/script>\n<script id="app">'+app+'<\/script></body></html>'}
+function persist(msg){saveUI();if(mode==="site"){try{var ov={};state.shows.forEach(function(s){if(s.status&&s.status!=="interest")ov[s.id]=s.status});localStorage.setItem(LSK_ST,JSON.stringify(ov));toast("내 상태를 이 브라우저에 저장했어요")}catch(e){toast("저장할 수 없는 환경이에요")}return Promise.resolve()}return artP.then(function(a){
+  if(a){return Promise.resolve(a.publish(buildDoc(state))).then(function(){toast(msg||"저장했어요")}).catch(function(e){var c=String((e&&(e.code||e.name))||"")+" "+String(e&&e.message||"");
+    if(/conflict/i.test(c))toast("다른 곳에서 먼저 수정돼 최신 버전으로 바뀝니다");
+    else if(/not_granted|not_writer/i.test(c))toast("읽기 전용이라 저장할 수 없어요");
+    else toast("저장 실패: "+(e&&e.message||e))})}
+  try{localStorage.setItem(LSK_DATA,JSON.stringify(state));toast(msg||"이 브라우저에 저장했어요")}catch(e){toast("저장할 수 없는 환경이에요")}
+})}
+var tT;function toast(t){var el=document.getElementById("toast");if(!el){el=document.createElement("div");el.id="toast";el.className="toast";document.body.appendChild(el)}el.textContent=t;el.classList.remove("hidden");clearTimeout(tT);tT=setTimeout(function(){el.classList.add("hidden")},2600)}
+
+/* ---------- render ---------- */
+var root=document.getElementById("root");
+function render(){
+  var up=state.updatedAt?parseDT(state.updatedAt):null,upTxt=up?(up.getMonth()+1)+"/"+up.getDate()+" "+hm(up):"";var info=mode==="site"?"매일 오전 10시 자동 업데이트"+(upTxt?" · 마지막 확인 "+upTxt:""):mode==="local"?(upTxt?upTxt+" 기준 저장본 · 이 파일은 자동 업데이트되지 않아요":"자동 업데이트되지 않는 저장본이에요"):"Claude가 매일 예매처를 확인해 자동 등록"+(upTxt?" · 마지막 확인 "+upTxt:"");
+  var h='<div class="wrap"><header><h1><span class="stub"></span>콘서트 티켓팅 캘린더</h1><span class="saveinfo">'+info+'</span><span class="spacer"></span>'+
+  '<div class="seg"><button data-act="view" data-v="cal" class="'+(ui.view==="cal"?"on":"")+'">캘린더</button><button data-act="view" data-v="list" class="'+(ui.view==="list"?"on":"")+'">목록</button></div>'+
+  LINKS+(mode==="site"?"":'<button class="btn ghost" data-act="backup">백업</button>')+'</header>'+
+  '<div class="layout"><div class="card main">'+toolbar()+(ui.view==="cal"?calendar():listView())+legend()+'</div><aside class="side">'+hero()+upcoming()+'</aside></div></div>';
+  root.innerHTML=h;tick();
+}
+function toolbar(){var g='<select class="f" data-act="genre"><option value="all">전체 공연장</option>'+GENRES.map(function(x){return'<option value="'+x[0]+'"'+(ui.genre===x[0]?" selected":"")+'>'+x[1]+'</option>'}).join("")+'</select>';
+  var s='<select class="f" data-act="status"><option value="all">전체 상태</option><option value="active"'+(ui.status==="active"?" selected":"")+'>진행 중(완료·패스 제외)</option>'+STATUS.map(function(x){return'<option value="'+x[0]+'"'+(ui.status===x[0]?" selected":"")+'>'+x[1]+'</option>'}).join("")+'</select>';
+  var nav=ui.view==="cal"?'<button class="btn sm" data-act="prev" aria-label="이전 달">‹</button><h2>'+ui.y+'년 '+(ui.m+1)+'월</h2><button class="btn sm" data-act="next" aria-label="다음 달">›</button><button class="btn sm ghost" data-act="today">오늘</button>':'<h2 style="text-align:left;margin-left:0">전체 콘서트 '+state.shows.filter(passes).length+'개</h2>';
+  return'<div class="toolbar">'+nav+'<span class="spacer"></span>'+g+s+(ui.view==="cal"?'<label class="chk"><input type="checkbox" data-act="runs"'+(ui.runs?" checked":"")+'> 공연일 표시</label>':"")+'</div>'}
+function legend(){return'<div class="legend">'+GENRES.map(function(g){return'<span><i style="background:'+gvar(g[0])+'"></i>'+g[1]+'</span>'}).join("")+'<span style="margin-left:auto">진한 칸 = 티켓 오픈 · 옅은 줄 = 공연일</span></div>'}
+
+function calendar(){
+  var first=new Date(ui.y,ui.m,1),start=new Date(ui.y,ui.m,1-first.getDay());
+  var last=new Date(ui.y,ui.m+1,0),cells=Math.ceil((first.getDay()+last.getDate())/7)*7;
+  var byDay={};function add(k,v){(byDay[k]=byDay[k]||[]).push(v)}
+  var end=new Date(start);end.setDate(end.getDate()+cells);
+  state.shows.forEach(function(sh){if(!passes(sh))return;
+    (sh.opens||[]).forEach(function(o){var d=parseDT(o.at);if(d)add(ymd(d),{k:"open",sh:sh,o:o,d:d})});
+    if(ui.runs){var s=parseDT(sh.start),e=parseDT(sh.end)||s;if(s){if(e<s)e=s;var c=new Date(Math.max(s,start));while(c<=e&&c<end){add(ymd(c),{k:"run",sh:sh});c.setDate(c.getDate()+1)}}}
+  });
+  var t=ymd(new Date()),h='<div class="grid">'+DOW.map(function(d,i){return'<div class="dow'+(i===0?" sun":i===6?" sat":"")+'">'+d+'</div>'}).join("");
+  for(var i=0;i<cells;i++){var d=new Date(start);d.setDate(start.getDate()+i);var k=ymd(d),ev=(byDay[k]||[]).slice();
+    ev.sort(function(a,b){if(a.k!==b.k)return a.k==="open"?-1:1;return a.k==="open"?a.d-b.d:0});
+    var cls="cell"+(d.getMonth()!==ui.m?" out":"")+(k===t?" today":"")+(d.getDay()===0?" sun":d.getDay()===6?" sat":"");
+    h+='<div class="'+cls+'" data-act="day" data-d="'+k+'"><span class="dn">'+d.getDate()+'</span>';
+    var max=4;ev.slice(0,max).forEach(function(e){var dim=isDim(e.sh)?" dim":"";
+      if(e.k==="open")h+='<button class="chip open'+dim+'" style="--gc:'+gvar(e.sh.genre)+'" data-act="edit" data-id="'+e.sh.id+'" title="'+esc(e.sh.title+" · "+(e.o.label||"")+" "+hm(e.d))+'"><span class="t">'+hm(e.d)+'</span>'+esc(e.sh.title)+'</button>';
+      else h+='<button class="chip run'+dim+'" style="--gc:'+gvar(e.sh.genre)+'" data-act="edit" data-id="'+e.sh.id+'" title="'+esc(e.sh.title+" 공연")+'">'+esc(e.sh.title)+'</button>'});
+    if(ev.length>max)h+='<span class="more">+'+(ev.length-max)+'개 더</span>';
+    h+='</div>'}
+  return h+'</div>'}
+
+function nextOpen(sh){var n=new Date(),best=null;(sh.opens||[]).forEach(function(o){var d=parseDT(o.at);if(d&&d>=n&&(!best||d<best.d))best={o:o,d:d}});return best}
+function listView(){var list=state.shows.filter(passes);
+  if(!list.length)return'<div class="emptyhint">아직 등록된 공연이 없어요. 오른쪽 위 <b>＋ 콘서트 추가</b>로 시작해 보세요.</div>';
+  list.sort(function(a,b){var x=nextOpen(a),y=nextOpen(b);if(x&&y)return x.d-y.d;if(x)return-1;if(y)return 1;return(parseDT(b.start)||0)-(parseDT(a.start)||0)});
+  var n=new Date();
+  return'<table class="lt"><thead><tr><th>콘서트</th><th>티켓 오픈</th><th class="hide-m">공연 기간</th><th class="hide-m">예매처</th><th>상태</th></tr></thead><tbody>'+list.map(function(sh){
+    var op=(sh.opens||[]).map(function(o){var d=parseDT(o.at);if(!d)return"";return'<span class="mono'+(d<n?" past":"")+'">'+esc(o.label||"오픈")+' '+fmtDT(d)+'</span>'}).join("")||'<span class="past">미정</span>';
+    var s=parseDT(sh.start),e=parseDT(sh.end);var per=s?fmtD(s)+(e&&ymd(e)!==ymd(s)?" ~ "+fmtD(e):""):"미정";
+    return'<tr class="row" data-act="edit" data-id="'+sh.id+'"><td><div class="tt">'+esc(sh.title)+'</div><span class="tag g" style="--gc:'+gvar(sh.genre)+'">'+(GNAME[sh.genre]||"기타")+'</span> <span style="color:var(--mute);font-size:12px">'+(sh.genre==="etc"?esc(sh.venue||""):"")+'</span></td><td><div class="opens">'+op+'</div></td><td class="hide-m">'+per+'</td><td class="hide-m">'+esc(sh.site||"")+'</td><td><span class="tag st-'+sh.status+'">'+(SNAME[sh.status]||"관심")+'</span></td></tr>'}).join("")+'</tbody></table>'}
+
+function hero(){var n=new Date(),up=allOpens().filter(function(x){return x.d>=n&&!isDim(x.sh)});
+  if(!up.length)return'<div class="hero empty"><div class="k">다음 티켓팅</div><div class="tt">예정된 티켓 오픈이 없어요</div><div class="meta" style="color:var(--mute)">새 예매 일정이 발표되면 Claude가 매일 확인해 여기에 등록해요.</div></div>';
+  var x=up[0],u=safeUrl(x.sh.url);
+  return'<div class="hero" style="--gc:'+gvar(x.sh.genre)+'"><span class="bar"></span><div class="k">다음 티켓팅 · '+esc(x.o.label||"오픈")+'</div><div class="tt">'+esc(x.sh.title)+'</div><div class="meta">'+fmtDT(x.d)+(x.sh.site?" · "+esc(x.sh.site):"")+'</div><div class="cd mono" data-cd="'+x.d.getTime()+'">'+countdown(x.d-n)+'</div><div class="acts">'+(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener">예매처 열기 ↗</a>':"")+'<a href="'+esc(gcal(x.sh,x.o))+'" target="_blank" rel="noopener">구글 캘린더에 알림 추가 ↗</a></div></div>'}
+
+function upcoming(){var n=new Date(),since=new Date(n.getTime()-36e5*3),up=allOpens().filter(function(x){return x.d>=since});
+  var h='<div class="card up"><h3>다가오는 티켓 오픈<span>'+up.length+'건</span></h3>';
+  if(!up.length)return h+'<div class="emptyhint">예정된 오픈이 없어요.</div></div>';
+  return h+'<ul class="ulist">'+up.slice(0,40).map(function(x){var dn=dayDiff(x.d),cls=dn<=0?"hot":dn<=3?"warm":"",lab=x.d<n?"지남":dn===0?(x.d-n<36e5*12?"<span data-cdshort=\""+x.d.getTime()+"\">"+hm(x.d)+"</span>":"D-DAY"):ddLabel(x.d);
+    return'<li class="ui'+(isDim(x.sh)?" dim":"")+'" data-act="edit" data-id="'+x.sh.id+'" style="--gc:'+gvar(x.sh.genre)+'"><div class="dd '+cls+'">'+lab+'</div><div style="min-width:0"><div class="a">'+esc(x.sh.title)+'</div><div class="b"><span class="gd"></span>'+esc(x.o.label||"오픈")+' · <span class="mono">'+fmtDT(x.d)+'</span>'+(x.sh.site?" · "+esc(x.sh.site):"")+'</div></div></li>'}).join("")+'</ul></div>'}
+
+function tick(){var n=Date.now();var el=root.querySelector("[data-cd]");if(el){var t=+el.getAttribute("data-cd");el.textContent=countdown(t-n);if(t-n<=0&&t-n>-1500)render()}
+  root.querySelectorAll("[data-cdshort]").forEach(function(e){var t=+e.getAttribute("data-cdshort"),ms=t-n;if(ms>0){var m=Math.floor(ms/6e4);e.textContent=m>=60?Math.floor(m/60)+"시간":m+"분"}else e.textContent="오픈"})}
+setInterval(tick,1000);
+
+/* ---------- modals ---------- */
+var ovEl=null;
+function closeModal(){if(ovEl){ovEl.remove();ovEl=null}}
+function openModal(html,onReady){closeModal();ovEl=document.createElement("div");ovEl.className="ov";ovEl.innerHTML='<div class="modal" role="dialog" aria-modal="true">'+html+'</div>';
+  ovEl.addEventListener("mousedown",function(e){if(e.target===ovEl)closeModal()});document.body.appendChild(ovEl);if(onReady)onReady(ovEl)}
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeModal()});
+
+function oRow(o){return'<div class="orow"><input list="olabels" placeholder="구분" value="'+esc(o.label||"")+'" data-o="label"><input type="datetime-local" value="'+esc(o.at||"")+'" data-o="at"><button type="button" class="x" data-rm title="삭제">×</button></div>'}
+function editModal(sh,isNew){
+  var o=(sh.opens&&sh.opens.length)?sh.opens:[{label:"팬클럽 선예매",at:""},{label:"일반예매",at:""}];
+  var html='<form id="ef"><div class="mh"><h3>'+(isNew?"콘서트 추가":"콘서트 상세 · 수정")+'</h3><button type="button" class="x" data-close>×</button></div><div class="mb">'+
+  '<label class="fld"><span>공연명 *</span><input name="title" required value="'+esc(sh.title||"")+'" placeholder="예: 아티스트명 + 투어명"></label>'+
+  '<div class="row2"><label class="fld"><span>공연장</span><select name="genre">'+GENRES.map(function(g){return'<option value="'+g[0]+'"'+(sh.genre===g[0]?" selected":"")+'>'+g[1]+'</option>'}).join("")+'</select></label>'+
+  '<label class="fld"><span>상태</span><select name="status">'+STATUS.map(function(s){return'<option value="'+s[0]+'"'+((sh.status||"interest")===s[0]?" selected":"")+'>'+s[1]+'</option>'}).join("")+'</select></label></div>'+
+  '<div class="fld"><span>티켓 오픈 일시</span><div class="opensbox" id="opens">'+o.map(oRow).join("")+'<button type="button" class="btn sm" data-addo style="align-self:flex-start">＋ 오픈 일정 추가</button></div></div>'+
+  '<div class="row2"><label class="fld"><span>예매처</span><input name="site" list="sites" value="'+esc(sh.site||"")+'" placeholder="선택 또는 입력"></label><label class="fld"><span>예매 링크</span><input name="url" value="'+esc(sh.url||"")+'" placeholder="https://"></label></div>'+
+  '<div class="row2"><label class="fld"><span>공연 시작일</span><input type="date" name="start" value="'+esc(sh.start||"")+'"></label><label class="fld"><span>공연 종료일</span><input type="date" name="end" value="'+esc(sh.end||"")+'"></label></div>'+
+  '<label class="fld"><span>공연장 이름 (기타 공연장일 때)</span><input name="venue" value="'+esc(sh.venue||"")+'" placeholder="예: 잠실실내체육관"></label>'+
+  '<label class="fld"><span>메모</span><textarea name="memo" rows="2" placeholder="좌석 구역, 인증 필요 여부, 가격 등">'+esc(sh.memo||"")+'</textarea></label>'+
+  '<datalist id="olabels">'+OPEN_LABELS.map(function(l){return'<option value="'+l+'">'}).join("")+'</datalist><datalist id="sites">'+SITES.map(function(l){return'<option value="'+l+'">'}).join("")+'</datalist>'+
+  '</div><div class="mf">'+(isNew?"":'<button type="button" class="btn danger ghost" data-del>삭제</button>')+'<span class="spacer"></span><button type="button" class="btn" data-close>취소</button><button type="submit" class="btn primary">저장</button></div></form>';
+  openModal(html,function(ov){var f=ov.querySelector("#ef"),box=ov.querySelector("#opens");if(mode==="site"){[].forEach.call(f.querySelectorAll("input,textarea,select"),function(el){if(el.name!=="status")el.disabled=true});[].forEach.call(ov.querySelectorAll("[data-addo],[data-rm],[data-del]"),function(el){el.style.display="none"});ov.querySelector(".mh h3").textContent="콘서트 상세";var lk=safeUrl(sh.url);if(lk){var a=document.createElement("a");a.className="btn";a.href=lk;a.target="_blank";a.rel="noopener";a.textContent="예매처 열기 ↗";var mf=ov.querySelector(".mf");mf.insertBefore(a,mf.firstChild)}}
+    f.title.focus();
+    ov.addEventListener("click",function(e){var t=e.target;
+      if(t.closest("[data-close]"))closeModal();
+      else if(t.closest("[data-addo]")){var w=document.createElement("div");w.innerHTML=oRow({label:"",at:""});box.insertBefore(w.firstChild,t.closest("[data-addo]"))}
+      else if(t.closest("[data-rm]"))t.closest(".orow").remove();
+      else if(t.closest("[data-del]")){var b=t.closest("[data-del]");if(b.dataset.sure){state.shows=state.shows.filter(function(s){return s.id!==sh.id});closeModal();render();persist("삭제했어요")}else{b.dataset.sure="1";b.textContent="정말 삭제할까요?"}}
+    });
+    f.addEventListener("submit",function(e){e.preventDefault();var title=f.title.value.trim();if(!title){f.title.focus();return}
+      var opens=[].slice.call(box.querySelectorAll(".orow")).map(function(r){return{label:r.querySelector('[data-o=label]').value.trim(),at:r.querySelector('[data-o=at]').value}}).filter(function(x){return x.at});
+      opens.sort(function(a,b){return a.at<b.at?-1:1});
+      var start=f.start.value,end=f.end.value;if(start&&end&&end<start){var tmp=start;start=end;end=tmp}
+      var data={id:sh.id||uid(),title:title,genre:f.genre.value,status:f.status.value,site:f.site.value.trim(),url:f.url.value.trim(),start:start,end:end,venue:f.venue.value.trim(),memo:f.memo.value.trim(),opens:opens};
+      if(mode==="site"&&!isNew){sh.status=f.status.value;closeModal();render();persist();return}if(isNew)state.shows.push(data);else{var i=state.shows.findIndex(function(s){return s.id===sh.id});if(i>=0)state.shows[i]=data}
+      var jump=opens.length?parseDT(opens[0].at):parseDT(start);
+      if(isNew&&jump&&ui.view==="cal"){ui.y=jump.getFullYear();ui.m=jump.getMonth()}
+      closeModal();render();persist(isNew?"콘서트를 추가했어요":"수정했어요")});
+  })}
+
+function dayModal(k){var d=parseDT(k),items=[];
+  state.shows.forEach(function(sh){(sh.opens||[]).forEach(function(o){var od=parseDT(o.at);if(od&&ymd(od)===k)items.push({k:"open",sh:sh,o:o,d:od})});
+    var s=parseDT(sh.start),e=parseDT(sh.end)||s;if(s&&k>=ymd(s)&&k<=ymd(e))items.push({k:"run",sh:sh})});
+  items.sort(function(a,b){if(a.k!==b.k)return a.k==="open"?-1:1;return a.k==="open"?a.d-b.d:0});
+  var html='<div class="mh"><h3>'+(d.getMonth()+1)+'월 '+d.getDate()+'일 ('+DOW[d.getDay()]+')</h3><button class="x" data-close>×</button></div><div class="mb">'+
+   (items.length?items.map(function(x){var u=safeUrl(x.sh.url);return'<div class="dayitem" data-id="'+x.sh.id+'" style="--gc:'+gvar(x.sh.genre)+'"><span class="bar"></span><div style="flex:1;min-width:0"><div class="a">'+esc(x.sh.title)+'</div><div class="b">'+(x.k==="open"?'🎫 '+esc(x.o.label||"티켓 오픈")+' <span class="mono">'+hm(x.d)+'</span>':"공연일")+" · "+esc(x.sh.genre==="etc"?(x.sh.venue||"기타 공연장"):GNAME[x.sh.genre]||"")+(x.sh.site?" · "+esc(x.sh.site):"")+'</div></div>'+
+     (x.k==="open"?'<a class="btn sm" href="'+esc(gcal(x.sh,x.o))+'" target="_blank" rel="noopener" data-stop>알림↗</a>':"")+(u?'<a class="btn sm" href="'+esc(u)+'" target="_blank" rel="noopener" data-stop>예매↗</a>':"")+'</div>'}).join(""):'<div class="emptyhint" style="padding:6px 0">이 날은 일정이 없어요.</div>')+
+   '</div><div class="mf"><span class="spacer"></span><button class="btn" data-close>닫기</button></div>';
+  openModal(html,function(ov){ov.addEventListener("click",function(e){var t=e.target;
+    if(t.closest("[data-stop]"))return;
+    if(t.closest("[data-close]"))closeModal();
+    else if(t.closest("[data-addday]"))editModal({genre:"kspo",status:"interest",opens:[{label:"팬클럽 선예매",at:k+"T20:00"},{label:"일반예매",at:""}]},true);
+    else{var it=t.closest(".dayitem");if(it){var sh=find(it.dataset.id);if(sh)editModal(sh,false)}}})})}
+
+function backupModal(){var html='<div class="mh"><h3>백업 · 복원</h3><button class="x" data-close>×</button></div><div class="mb"><div style="font-size:13px;color:var(--mute)">아래 내용을 복사해 두면 언제든 붙여넣어 복원할 수 있어요.</div><label class="fld"><textarea class="json" id="bj">'+esc(JSON.stringify(state,null,1))+'</textarea></label></div><div class="mf"><button class="btn" data-copy>복사</button><span class="spacer"></span><button class="btn" data-close>닫기</button><button class="btn primary" data-restore>붙여넣은 내용으로 복원</button></div>';
+  openModal(html,function(ov){ov.addEventListener("click",function(e){var t=e.target;
+    if(t.closest("[data-close]"))closeModal();
+    else if(t.closest("[data-copy]")){var v=ov.querySelector("#bj").value;try{navigator.clipboard.writeText(v).then(function(){toast("복사했어요")},function(){ov.querySelector("#bj").select();toast("텍스트를 선택했어요. Ctrl/⌘+C로 복사하세요")})}catch(_){ov.querySelector("#bj").select()}}
+    else if(t.closest("[data-restore]")){try{var d=JSON.parse(ov.querySelector("#bj").value);if(!d||!Array.isArray(d.shows))throw 0;d.shows.forEach(function(s){if(!s.id)s.id=uid();if(!Array.isArray(s.opens))s.opens=[]});state={shows:d.shows};closeModal();render();persist("복원했어요")}catch(_){toast("형식이 올바르지 않아요")}}})})}
+
+/* ---------- events ---------- */
+root.addEventListener("click",function(e){var t=e.target.closest("[data-act]");if(!t||t.tagName==="SELECT"||t.type==="checkbox")return;var a=t.dataset.act;
+  if(a==="edit"){e.stopPropagation();var sh=find(t.dataset.id);if(sh)editModal(sh,false)}
+  else if(a==="day")dayModal(t.dataset.d);
+  else if(a==="new")editModal({genre:"kspo",status:"interest"},true);
+  else if(a==="prev"){ui.m--;if(ui.m<0){ui.m=11;ui.y--}saveUI();render()}
+  else if(a==="next"){ui.m++;if(ui.m>11){ui.m=0;ui.y++}saveUI();render()}
+  else if(a==="today"){var n=new Date();ui.y=n.getFullYear();ui.m=n.getMonth();saveUI();render()}
+  else if(a==="view"){ui.view=t.dataset.v;saveUI();render()}
+  else if(a==="backup")backupModal()});
+root.addEventListener("change",function(e){var t=e.target,a=t.dataset.act;
+  if(a==="genre"){ui.genre=t.value}else if(a==="status"){ui.status=t.value}else if(a==="runs"){ui.runs=t.checked}else return;saveUI();render()});
+
+render();
+})();
+</script></body></html>
