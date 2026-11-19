@@ -127,7 +127,25 @@
      "at": "2026-11-23T19:00"
     }
    ]
+  },
+  {
+   "id": "akg2027",
+   "title": "ASIAN KUNG-FU GENERATION 30th Anniversary Extra Show in Korea",
+   "genre": "kintex",
+   "status": "interest",
+   "site": "멜론티켓",
+   "url": "https://ticket.melon.com/csoon/detail.htm?csoonId=13313",
+   "start": "2027-05-22",
+   "end": "2027-05-22",
+   "venue": "",
+   "memo": "킨텍스 HALL 10 · 멜론티켓 단독판매 · 전석 125,000원 · 선예매 여부는 공지에 명시 없음",
+   "opens": [
+    {
+     "label": "일반예매",
+     "at": "2026-11-27T20:00"
+    }
+   ]
   }
  ],
- "updatedAt": "2026-11-19T14:20"
+ "updatedAt": "2026-11-19T14:52"
 }
