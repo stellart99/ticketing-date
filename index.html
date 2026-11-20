@@ -233,7 +233,7 @@ function listView(){var list=state.shows.filter(passes);
     return'<tr class="row" data-act="edit" data-id="'+sh.id+'"><td><div class="tt">'+esc(sh.title)+'</div><span class="tag g" style="--gc:'+gvar(sh.genre)+'">'+(GNAME[sh.genre]||"기타")+'</span> <span style="color:var(--mute);font-size:12px">'+(sh.genre==="etc"?esc(sh.venue||""):"")+'</span></td><td><div class="opens">'+op+'</div></td><td class="hide-m">'+per+'</td><td class="hide-m">'+esc(sh.site||"")+'</td><td><span class="tag st-'+sh.status+'">'+(SNAME[sh.status]||"관심")+'</span></td></tr>'}).join("")+'</tbody></table>'}
 
 function hero(){var n=new Date(),up=allOpens().filter(function(x){return x.d>=n&&!isDim(x.sh)});
-  if(!up.length)return'<div class="hero empty"><div class="k">다음 티켓팅</div><div class="tt">예정된 티켓 오픈이 없어요</div><div class="meta" style="color:var(--mute)">새 예매 일정이 발표되면 Claude에게 확인을 요청해 여기에 등록하세요.</div></div>';
+  if(!up.length)return'<div class="hero empty"><div class="k">다음 티켓팅</div><div class="tt">예정된 티켓 오픈이 없어요</div></div>';
   var x=up[0],u=safeUrl(x.sh.url);
   return'<div class="hero" style="--gc:'+gvar(x.sh.genre)+'"><span class="bar"></span><div class="k">다음 티켓팅 · '+esc(x.o.label||"오픈")+'</div><div class="tt">'+esc(x.sh.title)+'</div><div class="meta">'+fmtDT(x.d)+(x.sh.site?" · "+esc(x.sh.site):"")+'</div><div class="cd mono" data-cd="'+x.d.getTime()+'">'+countdown(x.d-n)+'</div><div class="acts">'+(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener">예매처 열기 ↗</a>':"")+'<a href="'+esc(gcal(x.sh,x.o))+'" target="_blank" rel="noopener">구글 캘린더에 알림 추가 ↗</a></div></div>'}
 
