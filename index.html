@@ -140,6 +140,7 @@ try{var su=JSON.parse(localStorage.getItem(LSK_UI)||"null");if(su)for(var k in s
 function saveUI(){try{localStorage.setItem(LSK_UI,JSON.stringify(ui))}catch(e){}}
 
 var mode="loading",artifact=null;
+function RO(){return mode==="site"||(mode==="local"&&/^https?:$/.test(location.protocol))}
 var artP=(window.claude&&typeof window.claude.use==="function")?window.claude.use("artifact").catch(function(){return null}):Promise.resolve(null);
 var LSK_ST="concertTicketStatus";
 function applyOverlay(){try{var ov=JSON.parse(localStorage.getItem(LSK_ST)||"{}");state.shows.forEach(function(s){if(ov[s.id])s.status=ov[s.id]})}catch(e){}}
@@ -191,7 +192,7 @@ function render(){
   var up=state.updatedAt?parseDT(state.updatedAt):null,upTxt=up?(up.getMonth()+1)+"/"+up.getDate()+" "+hm(up):"";var info=mode==="site"?(upTxt?"마지막 확인 "+upTxt:""):mode==="local"?(upTxt?upTxt+" 기준 저장본 · 이 파일은 자동 업데이트되지 않아요":"자동 업데이트되지 않는 저장본이에요"):(upTxt?"마지막 확인 "+upTxt:"");
   var h='<div class="wrap"><header><h1><span class="stub"></span>콘서트 티켓팅 캘린더</h1><span class="saveinfo">'+info+'</span><span class="spacer"></span>'+
   '<div class="seg"><button data-act="view" data-v="cal" class="'+(ui.view==="cal"?"on":"")+'">캘린더</button><button data-act="view" data-v="list" class="'+(ui.view==="list"?"on":"")+'">목록</button></div>'+
-  LINKS+(mode==="site"?"":'<button class="btn ghost" data-act="backup">백업</button>')+'</header>'+
+  LINKS+(RO()?"":'<button class="btn ghost" data-act="backup">백업</button>')+'</header>'+
   '<div class="layout"><div class="card main">'+toolbar()+(ui.view==="cal"?calendar():listView())+legend()+'</div><aside class="side">'+hero()+upcoming()+'</aside></div></div>';
   root.innerHTML=h;tick();
 }
@@ -268,7 +269,7 @@ function editModal(sh,isNew){
   '<label class="fld"><span>메모</span><textarea name="memo" rows="2" placeholder="좌석 구역, 인증 필요 여부, 가격 등">'+esc(sh.memo||"")+'</textarea></label>'+
   '<datalist id="olabels">'+OPEN_LABELS.map(function(l){return'<option value="'+l+'">'}).join("")+'</datalist><datalist id="sites">'+SITES.map(function(l){return'<option value="'+l+'">'}).join("")+'</datalist>'+
   '</div><div class="mf">'+(isNew?"":'<button type="button" class="btn danger ghost" data-del>삭제</button>')+'<span class="spacer"></span><button type="button" class="btn" data-close>취소</button><button type="submit" class="btn primary">저장</button></div></form>';
-  openModal(html,function(ov){var f=ov.querySelector("#ef"),box=ov.querySelector("#opens");if(mode==="site"){[].forEach.call(f.querySelectorAll("input,textarea,select"),function(el){if(el.name!=="status")el.disabled=true});[].forEach.call(ov.querySelectorAll("[data-addo],[data-rm],[data-del]"),function(el){el.style.display="none"});ov.querySelector(".mh h3").textContent="콘서트 상세";var lk=safeUrl(sh.url);if(lk){var a=document.createElement("a");a.className="btn";a.href=lk;a.target="_blank";a.rel="noopener";a.textContent="예매처 열기 ↗";var mf=ov.querySelector(".mf");mf.insertBefore(a,mf.firstChild)}}
+  openModal(html,function(ov){var f=ov.querySelector("#ef"),box=ov.querySelector("#opens");if(RO()){[].forEach.call(f.querySelectorAll("input,textarea,select"),function(el){el.disabled=true});var sb=ov.querySelector("button[type=submit]");if(sb)sb.style.display="none";[].forEach.call(ov.querySelectorAll("[data-addo],[data-rm],[data-del]"),function(el){el.style.display="none"});ov.querySelector(".mh h3").textContent="콘서트 상세";var lk=safeUrl(sh.url);if(lk){var a=document.createElement("a");a.className="btn";a.href=lk;a.target="_blank";a.rel="noopener";a.textContent="예매처 열기 ↗";var mf=ov.querySelector(".mf");mf.insertBefore(a,mf.firstChild)}}
     f.title.focus();
     ov.addEventListener("click",function(e){var t=e.target;
       if(t.closest("[data-close]"))closeModal();
