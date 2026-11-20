@@ -188,7 +188,7 @@ var tT;function toast(t){var el=document.getElementById("toast");if(!el){el=docu
 /* ---------- render ---------- */
 var root=document.getElementById("root");
 function render(){
-  var up=state.updatedAt?parseDT(state.updatedAt):null,upTxt=up?(up.getMonth()+1)+"/"+up.getDate()+" "+hm(up):"";var info=mode==="site"?"Claude에게 요청할 때 예매처를 확인해 갱신"+(upTxt?" · 마지막 확인 "+upTxt:""):mode==="local"?(upTxt?upTxt+" 기준 저장본 · 이 파일은 자동 업데이트되지 않아요":"자동 업데이트되지 않는 저장본이에요"):"Claude에게 요청할 때 예매처를 확인해 갱신"+(upTxt?" · 마지막 확인 "+upTxt:"");
+  var up=state.updatedAt?parseDT(state.updatedAt):null,upTxt=up?(up.getMonth()+1)+"/"+up.getDate()+" "+hm(up):"";var info=mode==="site"?(upTxt?"마지막 확인 "+upTxt:""):mode==="local"?(upTxt?upTxt+" 기준 저장본 · 이 파일은 자동 업데이트되지 않아요":"자동 업데이트되지 않는 저장본이에요"):(upTxt?"마지막 확인 "+upTxt:"");
   var h='<div class="wrap"><header><h1><span class="stub"></span>콘서트 티켓팅 캘린더</h1><span class="saveinfo">'+info+'</span><span class="spacer"></span>'+
   '<div class="seg"><button data-act="view" data-v="cal" class="'+(ui.view==="cal"?"on":"")+'">캘린더</button><button data-act="view" data-v="list" class="'+(ui.view==="list"?"on":"")+'">목록</button></div>'+
   LINKS+(mode==="site"?"":'<button class="btn ghost" data-act="backup">백업</button>')+'</header>'+
