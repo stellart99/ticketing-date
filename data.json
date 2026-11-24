@@ -251,7 +251,204 @@
      "at": "2026-10-22T12:00"
     }
    ]
+  },
+  {
+   "id": "roykim-kspo2026",
+   "title": "2026-27 로이킴 LIVE TOUR [R:O:Y] in SEOUL",
+   "genre": "kspo",
+   "status": "interest",
+   "site": "NOL 티켓",
+   "url": "https://nol.yanolja.com/ticket/products/26013034",
+   "start": "2026-11-20",
+   "end": "2026-11-22",
+   "venue": "",
+   "memo": "11/21·22 매진 후 11/20(금) 20:00 추가 공연 · NOL 단독 · 이미 종료된 오픈(기록용)",
+   "opens": [
+    {
+     "label": "팬클럽 선예매(11/21·22)",
+     "at": "2026-09-16T20:00"
+    },
+    {
+     "label": "일반예매(11/21·22)",
+     "at": "2026-09-17T20:00"
+    },
+    {
+     "label": "추가공연 팬클럽 선예매(11/20)",
+     "at": "2026-10-12T19:00"
+    },
+    {
+     "label": "추가공연 일반예매(11/20)",
+     "at": "2026-10-13T20:00"
+    }
+   ]
+  },
+  {
+   "id": "jannabi-kspo2026",
+   "title": "잔나비 콘서트 '10월의 어느 멋진 날에' · '스웨트 앤 스타더스트' in 서울",
+   "genre": "kspo",
+   "status": "interest",
+   "site": "티켓링크",
+   "url": "https://www.ticketlink.co.kr/",
+   "start": "2026-10-23",
+   "end": "2026-10-25",
+   "venue": "",
+   "memo": "10/23(금) 19:30 '10월의 어느 멋진 날에' · 10/24 18:00·10/25 17:00 '스웨트 앤 스타더스트' 아시아투어 파이널 · 선예매는 기사에 없음 · 휠체어석 9/22 10:00 · 상품 링크 미확인(티켓링크 메인) · 이미 종료된 오픈(기록용)",
+   "opens": [
+    {
+     "label": "일반예매(10/23)",
+     "at": "2026-09-21T19:00"
+    },
+    {
+     "label": "일반예매(10/24·25)",
+     "at": "2026-09-21T20:00"
+    }
+   ]
+  },
+  {
+   "id": "andteam-kspo2026",
+   "title": "2026 &TEAM CONCERT TOUR 'BLAZE THE WAY' ENCORE in KSPO DOME",
+   "genre": "kspo",
+   "status": "interest",
+   "site": "NOL 티켓",
+   "url": "https://nol.yanolja.com/ticket/products/26011092",
+   "start": "2026-10-03",
+   "end": "2026-10-04",
+   "venue": "",
+   "memo": "10/3(토) 18:00 · 10/4(일) 17:00 · 165,000원부터 · 티켓 오픈 일시는 확인하지 못함(휠체어석 전화예매 8/12 10:00) · 판매 종료",
+   "opens": []
+  },
+  {
+   "id": "exo-planet6-encore",
+   "title": "EXO PLANET #6 - EXhOrizon [dot] - 송파 (서울 앙코르)",
+   "genre": "kspo",
+   "status": "interest",
+   "site": "멜론티켓",
+   "url": "https://ticket.melon.com/concert/index.htm",
+   "start": "2026-11-06",
+   "end": "2026-11-08",
+   "venue": "",
+   "memo": "11/6(금) 19:00 · 11/7(토) 18:00 · 11/8(일) 17:00 · 날짜는 기사 확인, 시각 20:00은 추정 · 선예매 8/20(EXO-L) · 글로벌 선예매 8/28 · 일반 8/31 · 상품 링크 미확인 · 이미 종료된 오픈(기록용)",
+   "opens": [
+    {
+     "label": "팬클럽 선예매",
+     "at": "2026-08-20T20:00"
+    },
+    {
+     "label": "글로벌 선예매",
+     "at": "2026-08-28T20:00"
+    },
+    {
+     "label": "일반예매",
+     "at": "2026-08-31T20:00"
+    }
+   ]
+  },
+  {
+   "id": "kgma2026",
+   "title": "2026 KGMA (11/7 아티스트 데이 · 11/8 뮤직 데이)",
+   "genre": "gocheok",
+   "status": "interest",
+   "site": "NOL 티켓",
+   "url": "https://nol.yanolja.com/ticket/genre/concert",
+   "start": "2026-11-07",
+   "end": "2026-11-08",
+   "venue": "",
+   "memo": "시상식 무대 · 고척스카이돔 · NOL 단독 · 선예매 구분 없이 단독 오픈 · 출처는 블로그 1곳 · 상품 링크 미확인 · 이미 종료된 오픈(기록용)",
+   "opens": [
+    {
+     "label": "일반예매",
+     "at": "2026-10-02T18:00"
+    }
+   ]
+  },
+  {
+   "id": "mma2026",
+   "title": "MMA2026 (멜론뮤직어워드)",
+   "genre": "gocheok",
+   "status": "interest",
+   "site": "멜론티켓",
+   "url": "https://ticket.melon.com/csoon/detail.htm?csoonId=13005",
+   "start": "2026-11-14",
+   "end": "2026-11-15",
+   "venue": "",
+   "memo": "11/14·15 모두 18:00 · 고척스카이돔 · 1차: 멜론 1년 이상 구독 MVIP·VIP·GOLD · 2차: 이용권 보유자 · 두 차수 합쳐 멜론 ID당 2매 · 이미 종료된 오픈(기록용)",
+   "opens": [
+    {
+     "label": "1차 예매(GOLD 이상)",
+     "at": "2026-10-19T20:00"
+    },
+    {
+     "label": "2차 예매(이용권 보유)",
+     "at": "2026-10-22T20:00"
+    }
+   ]
+  },
+  {
+   "id": "nctwish-gocheok2027",
+   "title": "NCT WISH 2nd CONCERT TOUR 'INTO THE WISH : Face Our WISH' in SEOUL",
+   "genre": "gocheok",
+   "status": "interest",
+   "site": "멜론티켓",
+   "url": "https://ticket.melon.com/concert/index.htm",
+   "start": "2027-01-15",
+   "end": "2027-01-16",
+   "venue": "",
+   "memo": "고척스카이돔 첫 공연 · 선예매 회차당 1인 1매 / 일반 1인 2매(선예매 포함) · VIP 220,000 / 일반 165,000원 · 상품 링크 미확인 · 이미 종료된 오픈(기록용)",
+   "opens": [
+    {
+     "label": "팬클럽 선예매",
+     "at": "2026-11-02T20:00"
+    },
+    {
+     "label": "글로벌 선예매",
+     "at": "2026-11-03T20:00"
+    },
+    {
+     "label": "일반예매",
+     "at": "2026-11-04T20:00"
+    }
+   ]
+  },
+  {
+   "id": "hanroro-inspire2027",
+   "title": "한로로 5th 단독콘서트 [물음표]",
+   "genre": "inspire",
+   "status": "interest",
+   "site": "NOL 티켓",
+   "url": "https://nol.yanolja.com/ticket/products/26015537",
+   "start": "2027-01-02",
+   "end": "2027-01-03",
+   "venue": "",
+   "memo": "1/2(토) 18:00 · 1/3(일) 17:00 · 데뷔 첫 아레나 · 스탠딩·2층 143,000 / 3층 132,000원 · 팬클럽 선예매는 확인 못 함 · 이미 종료된 오픈(기록용)",
+   "opens": [
+    {
+     "label": "일반예매",
+     "at": "2026-11-13T18:00"
+    }
+   ]
+  },
+  {
+   "id": "sbs-gayo2026",
+   "title": "2026 SBS 가요대전 (12/24·25)",
+   "genre": "kintex",
+   "status": "interest",
+   "site": "NOL 티켓",
+   "url": "https://world.nol.com/",
+   "start": "2026-12-24",
+   "end": "2026-12-25",
+   "venue": "",
+   "memo": "킨텍스 · 아래 오픈은 해외 팬용 NOL World(선행은 해외 발행 UnionPay 카드만) · 플로어+셔틀 479,000 / 일반석+셔틀 379,000원 · 국내 방청·일반 판매 일정은 아직 미발표",
+   "opens": [
+    {
+     "label": "해외 선행(NOL World)",
+     "at": "2026-11-09T14:00"
+    },
+    {
+     "label": "해외 일반(NOL World)",
+     "at": "2026-11-11T15:00"
+    }
+   ]
   }
  ],
- "updatedAt": "2026-11-25T08:00"
+ "updatedAt": "2026-11-25T08:05"
 }
