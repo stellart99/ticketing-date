@@ -189,7 +189,69 @@
      "at": "2026-12-18T20:00"
     }
    ]
+  },
+  {
+   "id": "woodz-archive1",
+   "title": "2026 WOODZ WORLD TOUR Archive. 1 : Completed",
+   "genre": "kspo",
+   "status": "interest",
+   "site": "멜론티켓",
+   "url": "https://ticket.melon.com/performance/index.htm?prodId=213923",
+   "start": "2026-10-31",
+   "end": "2026-11-01",
+   "venue": "",
+   "memo": "10/31(토) 18:00 · 11/1(일) 17:00 · 선예매 10/6 20:00~23:59:59 · 이미 종료된 오픈(10월 오픈 기록용)",
+   "opens": [
+    {
+     "label": "팬클럽 선예매",
+     "at": "2026-10-06T20:00"
+    },
+    {
+     "label": "일반예매",
+     "at": "2026-10-07T20:00"
+    }
+   ]
+  },
+  {
+   "id": "epikhigh-kspo2027",
+   "title": "2027 에픽하이 콘서트",
+   "genre": "kspo",
+   "status": "interest",
+   "site": "멜론티켓",
+   "url": "https://ticket.melon.com/concert/index.htm",
+   "start": "2027-01-22",
+   "end": "2027-01-24",
+   "venue": "",
+   "memo": "1/22 20:00 · 1/23 18:00 · 1/24 16:00 · 멤버십 선예매 10/2 20:00 · 이미 종료된 오픈(10월 오픈 기록용) · 링크는 멜론 콘서트 목록(상품 페이지 확인되면 교체)",
+   "opens": [
+    {
+     "label": "팬클럽 선예매",
+     "at": "2026-10-02T20:00"
+    },
+    {
+     "label": "일반예매",
+     "at": "2026-10-07T20:00"
+    }
+   ]
+  },
+  {
+   "id": "kenshi-yonezu2027",
+   "title": "요네즈 켄시 내한공연 KENSHI YONEZU 2026-2027 WORLD TOUR / GHOST",
+   "genre": "inspire",
+   "status": "interest",
+   "site": "NOL 티켓",
+   "url": "https://nol.yanolja.com/ticket/products/26015024",
+   "start": "2027-01-14",
+   "end": "2027-01-17",
+   "venue": "",
+   "memo": "1/14(목) 19:30 · 1/16(토) 19:00 · 1/17(일) 19:00 (1/15 공연 없음) · NOL 단독 · 선예매 없음 · 1인 2매 · 플로어 172,000 / P 165,000 / R 154,000 / S 143,000원 · 이미 종료된 오픈(10월 오픈 기록용)",
+   "opens": [
+    {
+     "label": "일반예매",
+     "at": "2026-10-22T12:00"
+    }
+   ]
   }
  ],
- "updatedAt": "2026-11-25T07:54"
+ "updatedAt": "2026-11-25T08:00"
 }
