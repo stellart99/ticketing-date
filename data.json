@@ -460,7 +460,87 @@
      "at": "2026-11-11T15:00"
     }
    ]
+  },
+  {
+   "id": "theboyz-zeneration3",
+   "title": "2026 THE BOYZ CONCERT : ZENERATION III",
+   "genre": "kspo",
+   "status": "interest",
+   "site": "멜론티켓",
+   "url": "https://ticket.melon.com/performance/index.htm?prodId=214321",
+   "start": "2026-12-24",
+   "end": "2026-12-27",
+   "venue": "",
+   "memo": "12/24(목) 19:30 · 12/25(금) 18:00 · 12/26(토) 17:00 · 12/27(일) 16:00 · 국내 선예매 인증 11/18 14:00~11/23 23:59 · 글로벌 선예매 11/24 20:00 · 선예매 회차당 1인 2매 / 일반 1인 4매(선예매 포함) · 전석 198,000원(선예매 할인 168,300원) · 휠체어석 11/26 10:00 · 이미 종료된 오픈(기록용)",
+   "opens": [
+    {
+     "label": "팬클럽 선예매",
+     "at": "2026-11-23T20:00"
+    },
+    {
+     "label": "일반예매",
+     "at": "2026-11-25T20:00"
+    }
+   ]
+  },
+  {
+   "id": "kyuhyun-continue2026",
+   "title": "규현 아시아 투어 'CONTINUE' 서울 공연",
+   "genre": "jangchung",
+   "status": "interest",
+   "site": "NOL 티켓",
+   "url": "https://nol.yanolja.com/ticket/genre/concert",
+   "start": "2026-12-18",
+   "end": "2026-12-20",
+   "venue": "",
+   "memo": "장충체육관 · 12/18(금) 20:00 · 12/19(토) 18:00 · 12/20(일) 17:00 · 선예매 인증 10/23 14:00~10/28 23:59 · 선예매 회차당 1인 1매 / 일반 1인 2매 · 플로어 154,000 / R 143,000원 · 상품 링크 미확인(NOL 콘서트 목록) · 출처: 블로그 1곳 · 이미 종료된 오픈(기록용)",
+   "opens": [
+    {
+     "label": "팬클럽 선예매",
+     "at": "2026-10-26T19:00"
+    },
+    {
+     "label": "일반예매",
+     "at": "2026-10-29T20:00"
+    }
+   ]
+  },
+  {
+   "id": "katseye-kspo2027",
+   "title": "KATSEYE: THE WILDWORLD TOUR in SEOUL (첫 단독 내한공연)",
+   "genre": "kspo",
+   "status": "interest",
+   "site": "NOL 티켓",
+   "url": "https://nol.yanolja.com/ticket/products/26015604",
+   "start": "2027-02-04",
+   "end": "2027-02-04",
+   "venue": "",
+   "memo": "2/4(목) 20:00 · 스탠딩 165,000 / P 176,000 / R 165,000 / S 154,000 / A 143,000 / B 132,000원 · 일반 온세일은 11/12라고만 확인했고 시각은 못 찾음(12:00은 EYEKONS 체험 상품 시각) · 멤버십 선예매 일정 확인 못 함 · 이미 종료된 오픈(기록용)",
+   "opens": [
+    {
+     "label": "일반예매(시각 미확인)",
+     "at": "2026-11-12T12:00"
+    }
+   ]
+  },
+  {
+   "id": "countdownfantasy2026",
+   "title": "COUNTDOWN FANTASY 2026-2027",
+   "genre": "kintex",
+   "status": "interest",
+   "site": "NOL 티켓",
+   "url": "https://nol.yanolja.com/ticket/products/26014568",
+   "start": "2026-12-31",
+   "end": "2026-12-31",
+   "venue": "",
+   "memo": "킨텍스 제2전시장 7·8홀 · 연말 밴드 페스티벌(HYUKOH, Silica Gel, FTISLAND, ONEWE 등 1차 12팀) · 1일권 121,000원 · 선예매 구분 없음 · 이미 종료된 오픈(기록용)",
+   "opens": [
+    {
+     "label": "일반예매",
+     "at": "2026-10-13T18:00"
+    }
+   ]
   }
  ],
- "updatedAt": "2026-11-25T08:07"
+ "updatedAt": "2026-11-26T14:56"
 }
